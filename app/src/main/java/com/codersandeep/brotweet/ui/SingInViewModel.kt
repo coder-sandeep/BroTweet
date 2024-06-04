@@ -38,6 +38,8 @@ class SingInViewModel @Inject constructor(private val userAPI: UserAPI) : ViewMo
 
                 if (result.isSuccessful && result.body() != null) {
                     _registerResponse.postValue(APIResult.Success(result.body()!!))
+                } else if (result.code() == 409) {
+                    _registerResponse.postValue(APIResult.Success(result.body()!!))
                 } else _registerResponse.postValue(APIResult.Error("Something went wrong!!"))
             } catch (e: Exception) {
                 _registerResponse.postValue(
